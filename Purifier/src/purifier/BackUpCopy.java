@@ -1,5 +1,6 @@
 package purifier;
 
+
 import java.io.*;
 import java.util.*;
 
@@ -7,27 +8,29 @@ import java.util.*;
  *
  * @author big
  */
-public class Purifier {
-    static public String separator = "<SEP>";
+public class BackUpCopy {
+    static private String separator = "<SEP>";
     
     static private int numberOfColumnsToCompare = 3;
     static private int[] indexesOfColumnsToCompare = {0, 2, 3};
-     
+    
     static private int numberOfColumnsForSort = 3;
     static private int[] orderOfSorting = {0, 2, 3};
     
-    static ArrayList<String> Lista = new ArrayList<>();
-    static String[] Array = {"0","1","2"};
+    static private ArrayList<String> Lista = new ArrayList<>();
+    static private String[] Array = {"0","1","2"};
 
-    static  String pathToFileRead = "/Users/big/Desktop/Canzoni.dati.txt";
-    static  String pathToFileWrite = "/Users/big/Desktop/purified.txt";
+    static private String pathToFileRead = "/Users/big/Desktop/Canzoni.dati.non-filtrato.txt";
+    static private String pathToFileWrite = "/Users/big/Desktop/purified.txt";
     
     public static void main(String[] args) throws FileNotFoundException, IOException {
         
-        Lista = importInList(pathToFileRead);
-        cleanList(Lista);
-        writeOnFile(Lista, pathToFileWrite);
-        
+        //Lista = importInList();
+        //cleanList(Lista);
+        //Array = fromListToArray(Lista);
+        Array = importInArray();
+        sortAccordingOneColum(Array, 0, Array.length, 3);
+        writeOnFile(Array);
     }
      
     public static void purify() throws FileNotFoundException,IOException{
@@ -36,9 +39,9 @@ public class Purifier {
         setPathToFileWrite();
         setSeparator();
         setColumsToCompare();
-        Lista = importInList(pathToFileRead);
+        Lista = importInList();
         cleanList(Lista);
-        //writeOnFile(Lista);
+        writeOnFile(Lista);
   
     }
     
@@ -86,7 +89,7 @@ public class Purifier {
         }    
     }
     
-    public static ArrayList<String> importInList(String pathToFileRead) throws IOException, FileNotFoundException {
+    private static ArrayList<String> importInList() throws IOException, FileNotFoundException {
         BufferedReader input= new BufferedReader(new FileReader(pathToFileRead));
         ArrayList<String> aux = new ArrayList<>();
         String currentLine;
@@ -97,7 +100,7 @@ public class Purifier {
         return aux;
     }
     
-    public static String[] importInArray(String pathToFileRead) throws IOException, FileNotFoundException {
+    private static String[] importInArray() throws IOException, FileNotFoundException {
         
         BufferedReader input = new BufferedReader(new FileReader(pathToFileRead));
         int dim=0;
@@ -118,7 +121,7 @@ public class Purifier {
    
     }
     
-    public static String[] fromListToArray(ArrayList<String> list){
+    private static String[] fromListToArray(ArrayList<String> list){
         
         String[] array = new String[list.size()];
         for (int i = 0; i < list.size(); i++) {
@@ -128,7 +131,7 @@ public class Purifier {
         return array;
     } 
     
-    public static ArrayList<String> fromArrayToList(String[] array){
+    private static ArrayList<String> fromArrayToList(String[] array){
         ArrayList<String> aux = new ArrayList<>();
         
         for (int i = 0; i < array.length; i++) {
@@ -137,15 +140,9 @@ public class Purifier {
         return aux;
     }
     
-    static void stampaArray(String[] a){
+    private static void stampaArray(String[] a){
         for (int i = 0; i < a.length; i++) {
             System.out.println(a[i]);
-        }
-    }
-    
-    static void stampaLista(ArrayList<String> lista){
-        for (int i = 0; i < lista.size(); i++) {
-            System.out.println(lista.get(i));
         }
     }
     
@@ -161,7 +158,7 @@ public class Purifier {
         return equals;
     }
     
-    public static void cleanList(ArrayList<String> l){
+    private static void cleanList(ArrayList<String> l){
     
         int removed = 0;
         int splitProblem = l.size()/4;
@@ -225,7 +222,7 @@ public class Purifier {
         System.out.println("Have been deleted "+removed+" lines!");
     }
     
-    public static void writeOnFile(ArrayList<String> l,String pathToFileWrite) throws FileNotFoundException, IOException{
+    private static void writeOnFile(ArrayList<String> l) throws FileNotFoundException, IOException{
         
         FileWriter outputWriter = new FileWriter(pathToFileWrite);
         for(int i = 0; i<l.size(); i++){
@@ -234,11 +231,11 @@ public class Purifier {
         outputWriter.flush();
     }
     
-    public static void writeOnFile(String[] s,String pathToFileWrite) throws FileNotFoundException, IOException{
+    private static void writeOnFile(String[] s) throws FileNotFoundException, IOException{
         
         FileWriter outputWriter = new FileWriter(pathToFileWrite);
         for(int i = 0; i<s.length; i++){
-            outputWriter.write( s[i] + "\n"); 
+            outputWriter.write( s.length + "\n"); 
         }
         outputWriter.flush();
     }
