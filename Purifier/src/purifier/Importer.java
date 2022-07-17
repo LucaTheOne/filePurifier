@@ -10,16 +10,16 @@ import java.util.*;
  */
 public class Importer {
     
-    public static String[] fromFileIntoArray(String pathToFileRead) throws IOException, FileNotFoundException {
-        
-        BufferedReader input = new BufferedReader(new FileReader(pathToFileRead));
+    public static String[] fromFileIntoArray() throws IOException, FileNotFoundException {
+        String path = ParamSetter.setPathToFileRead();
+        BufferedReader input = new BufferedReader(new FileReader(new File(path)));
         int dim=0;
         while(input.readLine() != null){
             dim++;
         }
         input.close();
         
-        input = new BufferedReader(new FileReader(pathToFileRead));
+        input = new BufferedReader(new FileReader(path));
         String[] aux = new String[dim];
         for (int i = 0; i < dim; i++) {
             aux[i] = input.readLine();
